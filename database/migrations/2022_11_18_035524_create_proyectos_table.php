@@ -18,7 +18,7 @@ class CreateProyectosTable extends Migration
             $table->string('url')->nullable();
             $table->string('nombre');
             $table->string('descripcion');
-            $table->dateTime('fecha_fin');
+        
             $table->smallInteger('favorito')->default(0); /* 0:en progreso 1:terminado */
             $table->smallInteger('terminado')->default(0);/* 0:en progreso 1:terminado */
             $table->foreignId('user_id')
