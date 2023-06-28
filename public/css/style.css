@@ -128,9 +128,9 @@ body {
     position: relative;
     top: 0;
     right: 0;
-    bottom: 120px; /* navigator height */
+    bottom: 220px; /* navigator height */
     width: 240px;
-    height:200%;
+    height:100%;
     box-sizing: border-box;
 }
 .object-property[data-property$="/fill"],

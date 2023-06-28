@@ -182,8 +182,78 @@ class DiagramaController extends Controller
        //dd($cell);
 
        $sql='';
-       $sql = 'create database ' .$nombre. ';'.PHP_EOL.' use ' .$nombre. ';'.PHP_EOL.PHP_EOL;
+       $foreignKeySQL='';
+       $sql = 'create database ' . $nombre . ';' . PHP_EOL . ' use ' . $nombre . ';' . PHP_EOL . PHP_EOL;
+
+       for ($i = 0; $i < count($cell); $i++) {
+           if ($cell[$i]->type == 'uml.Class') {
+               $sql .= 'create table ' . $cell[$i]->name . '(' . PHP_EOL . 'id int not null' . ',' . PHP_EOL;
        
+               for ($j = 0; $j < count($cell[$i]->attributes); $j++) {
+                   $attribute = str_replace('string', 'varchar (50)', $cell[$i]->attributes[$j]);
+                   $attribute = str_replace('int', 'int null', $attribute);
+                   $attribute = str_replace(':', '', $attribute);
+                   $sql .= $attribute . ',' . PHP_EOL;
+               }
+       
+               $foreignKeys = []; // Almacenar las claves foráneas
+               $sourceForeignKeyAdded = false;
+               $targetForeignKeyAdded = false;
+   
+                   // Obtener vértices de claves foráneas
+            for ($k = 0; $k < count($cell); $k++) {
+                if ($cell[$k]->type == 'app.Link' && $cell[$k]->source->id == $cell[$i]->id) {
+                    foreach ($cell[$k]->labels as $label) {
+                        $foreignKey = $label->attrs->text->text;
+                        $position = $label->position;
+
+                        if (($foreignKey == '1..*' || $foreignKey == '0..*') && $position == 30 && !$sourceForeignKeyAdded) {
+                            foreach ($cell as $targetCell) {
+                                if ($targetCell->id == $cell[$k]->target->id) {
+                                    $referencedTable = $targetCell->name; // Nombre de la tabla referenciada
+                                    $foreignKeySQL = 'id_'.$referencedTable.' int not null,'. PHP_EOL .' foreign key (' . 'id_'.$referencedTable . ') references ' . $referencedTable . '(id)'.' ON DELETE CASCADE  ON UPDATE CASCADE';
+                                    $sql .= $foreignKeySQL . ',' . PHP_EOL;
+                                    $sourceForeignKeyAdded = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if ($cell[$k]->type == 'app.Link' && $cell[$k]->target->id == $cell[$i]->id) {
+                    foreach ($cell[$k]->labels as $label) {
+                        $foreignKey = $label->attrs->text->text;
+                        $position = $label->position;
+
+                        if (($foreignKey == '1..*' || $foreignKey == '0..*') && $position == -30 && !$targetForeignKeyAdded) {
+                            foreach ($cell as $sourceCell) {
+                                if ($sourceCell->id == $cell[$k]->source->id) {
+                                    $referencedTable = $sourceCell->name; // Nombre de la tabla referenciada
+                                    $foreignKeySQL = 'id_'.$referencedTable.' int not null,'. PHP_EOL .'foreign key (' . 'id_'.$referencedTable . ') references ' . $referencedTable . '(id)'.' ON DELETE CASCADE  ON UPDATE CASCADE';
+                                    $sql .= $foreignKeySQL . ',' . PHP_EOL;
+                                    $targetForeignKeyAdded = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+               // Agregar las claves foráneas al SQL
+               if (!empty($foreignKeys)) {
+                   $sql .= implode(',' . PHP_EOL, $foreignKeys) . ',' . PHP_EOL;
+               }
+       
+               $sql = rtrim($sql, ',' . PHP_EOL); // Eliminar la última coma y nueva línea
+               $sql .= ',' . PHP_EOL . 'primary key (id)' . PHP_EOL;
+               $sql .= '); ' . PHP_EOL;
+           }
+       }
+
+       
+      //dd($sql);
+
         $path = 'script.sql';
         $th = fopen("script.sql", "w");
         fclose($th);
@@ -194,4 +264,4 @@ class DiagramaController extends Controller
     }
 
   
-}
+    }

@@ -57,7 +57,7 @@
                             <div class="col-auto mx-0 px-1 pt-2" id='descargar'>
                                 <a href="{{ route('diagramas.descargar', $diagrama->proyecto_id) }}"
                                     class="btn btn-secondary">
-                                    Descargar
+                                    Script<>
                                 </a>
                             </div>
                           
@@ -97,6 +97,7 @@
 
 </div>
             <div id="diagram"><div class="inspector-container" style="background-color: rgba(23,67,122,255)"></div></div>
+            <div id="diagram"><div class="inspector-container2" style="background-color: rgba(23,67,122,255)"></div></div>
                 <div id="myPaletteDiv"
                     style="width: 35%; margin-right: 2px; background-color: whitesmoke; border: 1px solid black; position: relative; -webkit-tap-highlight-color: rgba(255, 255, 255, 0); cursor: auto;">
 
