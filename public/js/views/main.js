@@ -71,7 +71,7 @@ var App = window.App || {};
                 display: 'flex',
                 justify: 'space-between',
                 model: graph,
-                defaultLink: new joint.shapes.uml.Association({ marking: ['uml.Generalization', 'uml.Association'] }),
+                defaultLink: new joint.shapes.app.Link,
                 defaultConnectionPoint: joint.shapes.uml.Association.connectionPoint,
                 interactive: { linkMove: true },
                 async: true,

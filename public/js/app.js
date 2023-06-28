@@ -9,10 +9,27 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/*harmony import*/ var laravel_echo__WEBPACK_IMPORTED__MODULE_O__=__webpack_require__(/*!laravel-echo */"./node_modules/laravel-echo/echo.js");
+window._=__webpack_require__(/*! lodash */"./node_modules/lodash/lodash.js");
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ module_default)
 /* harmony export */ });
 // packages/alpinejs/src/scheduler.js
+
+window.axios =__webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+window.axios.defaults.headers.common["X-Request-With"]="XMLHttpRequest";
+
+
+window,Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
+window.Echo =new laravel_echo_WEBPACK_IMPORTED_MODULE_0__["default"]({
+broadcaster: "pusher",
+key:"VU7rE1krUWWHFjIAzvpafOaGv7lBDOGQ",
+wsHost: window.location.hostname,
+wsPort:6001,
+forceTLS:false,
+disableStats:true
+});
+
 var flushPending = false;
 var flushing = false;
 var queue = [];

@@ -23,8 +23,10 @@ window.Echo = new Echo({
     key: process.env.MIX_PUSHER_APP_KEY,
     wsHost: window.location.hostname,
     wsPort: 6001,
+    wssPort:433,
     forceTLS: false,
     disableStats: true,
+    enableTransports:['ws','wss']
 });
 
 // import Echo from 'laravel-echo';

@@ -38,7 +38,8 @@ return [
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
                 'encrypted' => true,
-                'host' => '127.0.0.1',
+                'useTLS'=>true,
+                'host' => '	i0rgccmrx3at3wv3.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
                 'port' => 6001,
                 'scheme' => 'http'
             ],
