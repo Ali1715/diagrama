@@ -54,7 +54,12 @@
                                     Volver
                                 </a>
                             </div>
-
+                            <div class="col-auto mx-0 px-1 pt-2" id='descargar'>
+                                <a href="{{ route('diagramas.descargar', $diagrama->proyecto_id) }}"
+                                    class="btn btn-secondary">
+                                    Descargar
+                                </a>
+                            </div>
                           
                         </div>
                     </div>
